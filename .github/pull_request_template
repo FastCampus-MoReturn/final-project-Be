@@ -1,13 +1,20 @@
 ## Motivation
+<!-- 해결한 이슈의 카테고리와 해당 이슈 넘버를 나열하세요 -->
 
+fix #{issueNumber} (~ed, ~es)
+resolve #
+close #
 
-## Key Changes
+<!-- 간단한 설명도 추가해주세요 -->
+
+## Proposed Changes
 
 - Change 1
   - Description
 - Change 2
    - Description
 - Change 3
+   - Description
 
 ## To Reviewers
 
