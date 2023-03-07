@@ -13,12 +13,12 @@
 
 ## 📝 프로젝트 진행과정 기록
 
-1. [GitHub wiki](https://github.com/FastCampus-MoReturn/fianl-project-Be/wiki) <br>
+1. [GitHub wiki](https://github.com/FastCampus-MoReturn/final-project-Be/wiki) <br>
 2. [notion](https://peach-mousepad-7f9.notion.site/Fianl-1-78c640e277814856912a55ec75f13085)
 
 ## 📌 팀 컨벤션
 
-[Commit Convention](https://github.com/FastCampus-MoReturn/fianl-project-Be/wiki/%ED%8C%80-%EC%BB%A8%EB%B2%A4%EC%85%98)
+[Commit Convention](https://github.com/FastCampus-MoReturn/final-project-Be/wiki/%ED%8C%80-%EC%BB%A8%EB%B2%A4%EC%85%98)
 
 ## 🤼‍♀️ 팀 구성
 
