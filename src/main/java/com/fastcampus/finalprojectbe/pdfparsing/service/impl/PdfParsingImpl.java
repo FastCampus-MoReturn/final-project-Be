@@ -1,5 +1,6 @@
 package com.fastcampus.finalprojectbe.pdfparsing.service.impl;
 
+import com.fastcampus.finalprojectbe.global.response.ErrorResponseDTO;
 import com.fastcampus.finalprojectbe.global.response.ResponseDTO;
 import com.fastcampus.finalprojectbe.pdfparsing.dto.PdfParsingResDTO;
 import com.fastcampus.finalprojectbe.pdfparsing.service.PdfParsingService;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,20 +24,29 @@ import java.util.regex.Pattern;
 public class PdfParsingImpl implements PdfParsingService {
     @Override
     public ResponseDTO<?> pdfParsing(MultipartFile multipartFile) throws IOException {
-        PDFParser pdfParser = new PDFParser(multipartFile.getInputStream());
-        pdfParser.parse();
-        PDDocument document = pdfParser.getPDDocument();
-        PDFTextStripper pdfStripper = new PDFTextStripper();
-        String pdfText = pdfStripper.getText(document);
-        document.close();
+        try {
+            String fileName = multipartFile.getOriginalFilename();
+            String fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
 
-        PdfParsingResDTO pdfParsingResDTO = new PdfParsingResDTO();
+            if (fileExtension.equals("pdf")) {
+                PDFParser pdfParser = new PDFParser(multipartFile.getInputStream());
+                pdfParser.parse();
+                PDDocument document = pdfParser.getPDDocument();
+                PDFTextStripper pdfStripper = new PDFTextStripper();
+                String pdfText = pdfStripper.getText(document);
+                document.close();
 
-        MaxFloorParsing(pdfText, pdfParsingResDTO);
-        exclusiveAreaParsing(pdfText, pdfParsingResDTO);
-        summaryParsing(pdfText, pdfParsingResDTO);
+                PdfParsingResDTO pdfParsingResDTO = new PdfParsingResDTO();
 
-        return new ResponseDTO<>(pdfParsingResDTO);
+                MaxFloorParsing(pdfText, pdfParsingResDTO);
+                exclusiveAreaParsing(pdfText, pdfParsingResDTO);
+                summaryParsing(pdfText, pdfParsingResDTO);
+                return new ResponseDTO<>(pdfParsingResDTO);
+            }
+        } catch (NullPointerException e) {
+            return new ErrorResponseDTO(404, "파일이 없거나 잘못된 접근입니다.").toResponse();
+        }
+        return new ErrorResponseDTO(400, "파일형식이 잘못되었습니다").toResponse();
     }
 
     public void MaxFloorParsing(String pdfText, PdfParsingResDTO pdfParsingResDTO) {
@@ -229,7 +240,9 @@ public class PdfParsingImpl implements PdfParsingService {
             count++;
         }
         pdfParsingResDTO.setJeonseAuthorityList(jeonseAuthority);
-    }    public void bondCreditorParsing(String parsingLine, PdfParsingResDTO pdfParsingResDTO) {
+    }
+
+    public void bondCreditorParsing(String parsingLine, PdfParsingResDTO pdfParsingResDTO) {
 
         String regex = "(?<=채권자\\s{2})\\S+";
         Pattern pattern = Pattern.compile(regex);
