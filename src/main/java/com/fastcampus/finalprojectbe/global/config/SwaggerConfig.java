@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -44,7 +45,11 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("HolyMoly")
-                .description("부동산 해설 서비스")
+                .description("{<br>" +
+                        "\"code\": HttpCode,<br>" +
+                        "  \"message\": \"string\"<br>" +
+                        "  \"data\": {   },<br>" +
+                        "  }"+"<br>" +"모든 반환 값은 기본양식의 data에 담겨서 반환됩니다.")
 //                .contact(new Contact("이름","홈페이지","email"))
 //                .license("라이센스소유자")
 //                .licenseUrl("라이센스URL")
@@ -68,4 +73,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 //        authorizationScopes[0] = authorizationScope;
 //        return Arrays.asList(new SecurityReference(REFERENCE, authorizationScopes));
 //    }
+
+    @Bean
+    public InternalResourceViewResolver defaultViewResolver() {
+        return new InternalResourceViewResolver();
+    }
 }
