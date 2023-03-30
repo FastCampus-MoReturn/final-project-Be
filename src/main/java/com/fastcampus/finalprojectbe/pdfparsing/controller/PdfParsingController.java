@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 
 
 @Controller
-public class PdfToJasonController {
+public class PdfParsingController {
 
 
 }
