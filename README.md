@@ -1,3 +1,6 @@
+![2](https://user-images.githubusercontent.com/113875954/226260766-9f11100d-307e-4a27-a2a6-6876c39f9ef6.jpg)
+
+
 # 💰Mori
 
 부동산을 공부한 적은 없지만, 매매 또는 임대해야하는 사람들에게 쉽게 특정 부동산 관련 정보 해설<br>
@@ -16,9 +19,10 @@
 1. [GitHub wiki](https://github.com/FastCampus-MoReturn/final-project-Be/wiki) <br>
 2. [notion](https://peach-mousepad-7f9.notion.site/Fianl-1-78c640e277814856912a55ec75f13085)
 
-## 📌 팀 컨벤션
+## 📌 자료 모음
 
-[Commit Convention](https://github.com/FastCampus-MoReturn/final-project-Be/wiki/%ED%8C%80-%EC%BB%A8%EB%B2%A4%EC%85%98)
+<li><a href="https://github.com/FastCampus-MoReturn/final-project-Be/wiki/%ED%8C%80-%EC%BB%A8%EB%B2%A4%EC%85%98">🔒팀 컨벤션</a></li>
+<li><a href="https://drive.google.com/file/d/183A3PF8G0C_fnqJmUIHW6IZvTUTlZ91u/view?usp=sharing">💾 기획 발표</a></li>
 
 ## 🤼‍♀️ 팀 구성
 
@@ -26,7 +30,7 @@
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/baker-lee"><img src= "https://avatars.githubusercontent.com/u/113500934?v=4" width="100px" alt=""/><br /><sub><b>BE 팀장 : 이성호 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/superb-Jay"><img src="https://avatars.githubusercontent.com/u/113875954?v=4" width="100px" alt=""/><br /><sub><b>BE 팀원 : 장재학 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/JaeHackJang"><img src="https://avatars.githubusercontent.com/u/113875954?v=4" width="100px" alt=""/><br /><sub><b>BE 팀원 : 장재학 </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/dkschdcks"><img src="https://avatars.githubusercontent.com/u/113900719?v=4" width="100px" alt=""/><br /><sub><b>BE 팀원 : 안장원 </b></sub></a><br /></td>
    </tr>
   </tbody>
