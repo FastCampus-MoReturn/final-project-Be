@@ -1,9 +1,10 @@
 package com.fastcampus.finalprojectbe.pdfparsing.service.impl;
 
-import com.fastcampus.finalprojectbe.global.response.ErrorResponseDTO;
-import com.fastcampus.finalprojectbe.global.response.ResponseDTO;
+import com.fastcampus.finalprojectbe.global.response.CommonResponse;
+import com.fastcampus.finalprojectbe.global.response.ResponseService;
 import com.fastcampus.finalprojectbe.pdfparsing.dto.PdfParsingResDTO;
 import com.fastcampus.finalprojectbe.pdfparsing.service.PdfParsingService;
+import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
@@ -21,9 +22,13 @@ import java.util.regex.Pattern;
 
 
 @Service
+@RequiredArgsConstructor
 public class PdfParsingImpl implements PdfParsingService {
+
+    private final ResponseService responseService;
+
     @Override
-    public ResponseDTO<?> pdfParsing(MultipartFile multipartFile) throws IOException {
+    public CommonResponse pdfParsing(MultipartFile multipartFile) throws IOException {
         try {
             String fileName = multipartFile.getOriginalFilename();
             String fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
@@ -41,12 +46,12 @@ public class PdfParsingImpl implements PdfParsingService {
                 MaxFloorParsing(pdfText, pdfParsingResDTO);
                 exclusiveAreaParsing(pdfText, pdfParsingResDTO);
                 summaryParsing(pdfText, pdfParsingResDTO);
-                return new ResponseDTO<>(pdfParsingResDTO);
+                return responseService.getSingleResponse(pdfParsingResDTO);
             }
         } catch (NullPointerException e) {
-            return new ErrorResponseDTO(404, "파일이 없거나 잘못된 접근입니다.").toResponse();
+            return responseService.getFailResponse(400,"파일이 없거나 잘못된 접근입니다.");
         }
-        return new ErrorResponseDTO(400, "파일형식이 잘못되었습니다").toResponse();
+        return responseService.getFailResponse(404,"파일형식이 잘못되었습니다");
     }
 
     public void MaxFloorParsing(String pdfText, PdfParsingResDTO pdfParsingResDTO) {
