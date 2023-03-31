@@ -11,7 +11,7 @@ public class ResponseService {
         SingleResponse<T> res = new SingleResponse<>();
         res.setData(data);
         res.setCode(200);
-        res.setMessage("Success");
+        res.setMessage("요청에 성공하였습니다.");
         res.setSuccess(true);
         return res;
     }
@@ -20,7 +20,7 @@ public class ResponseService {
         ListResponse<T> res = new ListResponse<>();
         res.setList(list);
         res.setCode(200);
-        res.setMessage("Success");
+        res.setMessage("요청에 성공하였습니다.");
         res.setSuccess(true);
         return res;
     }
@@ -29,7 +29,7 @@ public class ResponseService {
         CommonResponse res = new CommonResponse();
         res.setSuccess(true);
         res.setCode(200);
-        res.setMessage("Success");
+        res.setMessage("요청에 성공하였습니다.");
         return res;
     }
 
