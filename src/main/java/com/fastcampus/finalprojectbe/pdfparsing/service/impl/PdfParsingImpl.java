@@ -1,5 +1,6 @@
 package com.fastcampus.finalprojectbe.pdfparsing.service.impl;
 
+import com.fastcampus.finalprojectbe.global.exception.PDFValidationException;
 import com.fastcampus.finalprojectbe.global.response.CommonResponse;
 import com.fastcampus.finalprojectbe.global.response.ResponseService;
 import com.fastcampus.finalprojectbe.pdfparsing.dto.PdfParsingResDTO;
@@ -28,31 +29,40 @@ public class PdfParsingImpl implements PdfParsingService {
     private final ResponseService responseService;
 
     @Override
-    public CommonResponse pdfParsing(MultipartFile multipartFile) throws IOException {
+    public CommonResponse pdfParsing(MultipartFile multipartFile) throws IOException, PDFValidationException {
+        String fileExtension = "";
+
         try {
             String fileName = multipartFile.getOriginalFilename();
-            String fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
+            fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
+        } catch (NullPointerException e) {
+            return responseService.getFailResponse(400, "파일이 없거나 잘못된 접근입니다.");
+        }
 
-            if (fileExtension.equals("pdf")) {
-                PDFParser pdfParser = new PDFParser(multipartFile.getInputStream());
-                pdfParser.parse();
-                PDDocument document = pdfParser.getPDDocument();
-                PDFTextStripper pdfStripper = new PDFTextStripper();
-                String pdfText = pdfStripper.getText(document);
-                document.close();
+        if (fileExtension.equals("pdf")) {
+            PDFParser pdfParser = new PDFParser(multipartFile.getInputStream());
+            pdfParser.parse();
+            PDDocument document = pdfParser.getPDDocument();
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            String pdfText = pdfStripper.getText(document);
+            document.close();
 
-                PdfParsingResDTO pdfParsingResDTO = new PdfParsingResDTO();
+            PdfParsingResDTO pdfParsingResDTO = new PdfParsingResDTO();
 
+            try {
                 MaxFloorParsing(pdfText, pdfParsingResDTO);
                 exclusiveAreaParsing(pdfText, pdfParsingResDTO);
                 summaryParsing(pdfText, pdfParsingResDTO);
-                return responseService.getSingleResponse(pdfParsingResDTO);
+            }catch (Exception e){
+                throw new PDFValidationException();
             }
-        } catch (NullPointerException e) {
-            return responseService.getFailResponse(400,"파일이 없거나 잘못된 접근입니다.");
+            return responseService.getSingleResponse(pdfParsingResDTO);
+        } else {
+            return responseService.getFailResponse(404, "파일형식이 잘못되었습니다");
         }
-        return responseService.getFailResponse(404,"파일형식이 잘못되었습니다");
+
     }
+
 
     public void MaxFloorParsing(String pdfText, PdfParsingResDTO pdfParsingResDTO) {
 
@@ -94,6 +104,8 @@ public class PdfParsingImpl implements PdfParsingService {
         mortgageNameParsing(parsingLines[3], pdfParsingResDTO);
         bondCreditorParsing(parsingLines[3], pdfParsingResDTO);
         printingDateParsing(parsingLines[3], pdfParsingResDTO);
+
+
     }
 
 

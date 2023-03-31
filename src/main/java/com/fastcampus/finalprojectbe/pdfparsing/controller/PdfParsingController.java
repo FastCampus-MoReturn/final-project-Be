@@ -29,6 +29,7 @@ public class PdfParsingController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "PDF 파일이 아님"),
+            @ApiResponse(responseCode = "403", description = "PDF 요약본이 없음"),
             @ApiResponse(responseCode = "404", description = "잘못된 접근"),
             @ApiResponse(responseCode = "500", description = "파싱 실패 서버에러")
     })
