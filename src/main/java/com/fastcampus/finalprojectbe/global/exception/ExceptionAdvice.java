@@ -22,4 +22,10 @@ public class ExceptionAdvice {
         return responseService.getFailResponse(500,"서버 에러");
     }
 
+    @ExceptionHandler(PDFValidationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResponse validationException(HttpServletRequest req, PDFValidationException e){
+        return responseService.getFailResponse(403,"PDF 요약본이 없습니다.");
+    }
+
 }
