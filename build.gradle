@@ -26,6 +26,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox
     implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '1.8.17'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 
 }
