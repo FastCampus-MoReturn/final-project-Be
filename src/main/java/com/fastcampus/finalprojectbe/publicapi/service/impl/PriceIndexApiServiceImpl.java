@@ -53,7 +53,7 @@ public class PriceIndexApiServiceImpl implements PriceIndexApiService {
 
 
         URI uri = URI.create(builder.build().toUriString() + ("&serviceKey=" + SERVICE_KEY));
-        log.info("uri : {}", uri);
+//        log.info("uri : {}", uri);
         return responseService.getListResponse(researchDateSortReturn(uri));
     }
 
@@ -76,8 +76,6 @@ public class PriceIndexApiServiceImpl implements PriceIndexApiService {
                         TradingPriceIndexResDTO dto = new TradingPriceIndexResDTO();
                         dto.setRESEARCH_DATE(node.get("RESEARCH_DATE").asText());
                         dto.setINDICES(node.get("INDICES").asText());
-                        dto.setLEVEL_NO(node.get("LEVEL_NO").asText());
-                        dto.setREGION_CD(node.get("REGION_CD").asText());
                         dto.setREGION_NM(node.get("REGION_NM").asText());
                         dto.setTR_GBN(node.get("TR_GBN").asText());
                         dtoList.add(dto);
