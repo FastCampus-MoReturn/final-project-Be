@@ -1,5 +1,9 @@
 package com.fastcampus.finalprojectbe.pdfparsing.service.impl;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.fastcampus.finalprojectbe.global.exception.PDFValidationException;
 import com.fastcampus.finalprojectbe.global.response.CommonResponse;
 import com.fastcampus.finalprojectbe.global.response.ResponseService;
@@ -9,10 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -26,12 +32,16 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class PdfParsingImpl implements PdfParsingService {
 
+    private final AmazonS3Client amazonS3Client;
     private final ResponseService responseService;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     public CommonResponse pdfParsing(MultipartFile multipartFile) throws IOException, PDFValidationException {
-        String fileExtension = "";
 
+        String fileExtension = "";
         try {
             String fileName = multipartFile.getOriginalFilename();
             fileExtension = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
@@ -40,7 +50,12 @@ public class PdfParsingImpl implements PdfParsingService {
         }
 
         if (fileExtension.equals("pdf")) {
-            PDFParser pdfParser = new PDFParser(multipartFile.getInputStream());
+            String key = uploadFileToS3(multipartFile);
+            S3Object s3Object = amazonS3Client.getObject(bucket, key);
+            InputStream inputStream = s3Object.getObjectContent();
+
+
+            PDFParser pdfParser = new PDFParser(inputStream);
             pdfParser.parse();
             PDDocument document = pdfParser.getPDDocument();
             PDFTextStripper pdfStripper = new PDFTextStripper();
@@ -61,6 +76,20 @@ public class PdfParsingImpl implements PdfParsingService {
             return responseService.getFailResponse(404, "파일형식이 잘못되었습니다");
         }
 
+    }
+
+    public String uploadFileToS3(MultipartFile multipartFile) {
+        String key = multipartFile.getOriginalFilename();
+        InputStream inputStream;
+        try {
+            inputStream = multipartFile.getInputStream();
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(multipartFile.getSize());
+            amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream,metadata));
+        } catch (IOException e) {
+            throw new PDFValidationException();
+        }
+        return key;
     }
 
 
@@ -113,15 +142,16 @@ public class PdfParsingImpl implements PdfParsingService {
 
         String[] header = parsingLine.split("바랍니다.", 2);
         String[] parsingHeader = header[header.length - 1].split("\\[집합건물]|\\[건물]", 2);
-        pdfParsingResDTO.setUniqueNumber(parsingHeader[0].substring(7).trim());
+        pdfParsingResDTO.setUniqueNumber(parsingHeader[0].substring(6).trim());
         pdfParsingResDTO.setAddress(parsingHeader[parsingHeader.length - 1].trim());
 
     }
 
     public void ownerParsing(String parsingLine, PdfParsingResDTO pdfParsingResDTO) {
 
-        String regex = "(?<name>[가-힣]+) \\((소유자|공유자)\\) (?<age>\\d{6}-\\*{7}) (?<share>[0-9/분의|단독소유 ]+) (?<owneraddress>[^\\n]+).* (?<rank>\\d+)";
-        String[] lineList = parsingLine.split("\r\n");
+        String regex = "(?<name>[가-힣]+) \\((소유자|공유자)\\) (?<age>\\d{6}-\\*{7}) (?<share>[0-9/분의|단독소유 ]+) (?<owneraddress>[^\\n\\r]+).* (?<rank>\\d+)";
+
+        String[] lineList = parsingLine.split("\n");
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(parsingLine);
@@ -134,7 +164,7 @@ public class PdfParsingImpl implements PdfParsingService {
             owner.put("age", matcher.group("age"));
             owner.put("share", matcher.group("share"));
             sb.append(matcher.group("owneraddress")).append(" ");
-            sb.append(lineList[lineList.length - 1]);
+            sb.append(lineList[lineList.length - 1].trim());
             owner.put("ownerAddress", sb.toString());
             owner.put("rank", matcher.group("rank"));
 
@@ -274,7 +304,7 @@ public class PdfParsingImpl implements PdfParsingService {
     }
 
     public void printingDateParsing(String parsingLine, PdfParsingResDTO pdfParsingResDTO) {
-        String[] parsingLineList = parsingLine.split("\r\n");
+        String[] parsingLineList = parsingLine.split("\n");
         String printTime = parsingLineList[parsingLineList.length - 1].substring(7).trim();
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
         LocalDateTime dt = LocalDateTime.parse(printTime, inputFormatter);

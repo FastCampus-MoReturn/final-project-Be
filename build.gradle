@@ -27,6 +27,8 @@ dependencies {
     implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '1.8.17'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
 
 }
