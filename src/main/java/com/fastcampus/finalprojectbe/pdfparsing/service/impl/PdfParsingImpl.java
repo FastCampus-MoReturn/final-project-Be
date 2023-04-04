@@ -162,7 +162,13 @@ public class PdfParsingImpl implements PdfParsingService {
             StringBuilder sb = new StringBuilder();
             owner.put("name", matcher.group("name"));
             owner.put("age", matcher.group("age"));
-            owner.put("share", matcher.group("share"));
+            if(matcher.group("share").contains("분의")) {
+                String[] shareArray = matcher.group("share").split("분의 ", 2);
+                double share = Double.parseDouble(shareArray[shareArray.length - 1]) / Double.parseDouble(shareArray[0]);
+                owner.put("share", String.valueOf(share));
+            }else{
+                owner.put("share","1");
+            }
             sb.append(matcher.group("owneraddress")).append(" ");
             sb.append(lineList[lineList.length - 1].trim());
             owner.put("ownerAddress", sb.toString());
