@@ -114,7 +114,7 @@ public class PdfParsingImpl implements PdfParsingService {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(parsingLines[0]);
         if (matcher.find()) {
-            String match = matcher.group(0);
+            String match = matcher.group(0).replace("㎡","").trim();
             pdfParsingResDTO.setExclusiveArea(match);
         }
     }
