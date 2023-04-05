@@ -70,7 +70,6 @@ public class PdfParsingImpl implements PdfParsingService {
                 landrightratioParsing(pdfText, pdfParsingResDTO);
                 summaryParsing(pdfText, pdfParsingResDTO);
             } catch (Exception e) {
-                e.printStackTrace();
                 throw new PDFValidationException();
             }
             return responseService.getSingleResponse(pdfParsingResDTO);
@@ -130,10 +129,9 @@ public class PdfParsingImpl implements PdfParsingService {
         Matcher matcher = pattern.matcher(additional_split[0]);
         if (matcher.find()) {
             String match = matcher.group();
-            System.out.println(match);
             String[] additional_parts = match.split("분의", 2);
             landrightratio = Double.parseDouble(additional_parts[additional_parts.length - 1]) / Double.parseDouble(additional_parts[0]);
-            pdfParsingResDTO.setLandrightratio(landrightratio);
+            pdfParsingResDTO.setLandRightRatio(landrightratio);
         } else {
             String[] lines = additional_split[0].split("\n");
             regex = "(\\d+(?:\\.\\d+)?)분의";
@@ -148,10 +146,9 @@ public class PdfParsingImpl implements PdfParsingService {
                 }
             }
             String result = sb.toString();
-            System.out.println(result);
             String[] additional_parts = result.split("분의", 2);
             landrightratio = Double.parseDouble(additional_parts[additional_parts.length - 1]) / Double.parseDouble(additional_parts[0]);
-            pdfParsingResDTO.setLandrightratio(landrightratio);
+            pdfParsingResDTO.setLandRightRatio(landrightratio);
         }
 
     }
