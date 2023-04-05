@@ -12,10 +12,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://moreturn.shop")
+                .allowedOrigins("*")
                 .allowedHeaders("*")
-                .allowedMethods("GET","POST","PUT","DELETE")
-                .allowCredentials(true)
+                .allowedMethods("*")
+                .allowCredentials(false)
                 .maxAge(MAX_AGE_SECS);
 
     }
