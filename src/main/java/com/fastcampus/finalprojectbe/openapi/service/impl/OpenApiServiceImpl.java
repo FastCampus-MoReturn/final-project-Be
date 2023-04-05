@@ -70,7 +70,7 @@ public class OpenApiServiceImpl implements OpenApiService {
     }
 
     @Override
-    public CommonResponse tradingDetail(String address, int researchDate) throws ParserConfigurationException, IOException, SAXException {
+    public CommonResponse tradingDetail(String address, int researchDate) {
         String jibun = "";
         String aptName = "";
         try {
