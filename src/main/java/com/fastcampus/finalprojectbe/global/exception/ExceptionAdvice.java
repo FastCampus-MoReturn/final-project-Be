@@ -28,4 +28,10 @@ public class ExceptionAdvice {
         return responseService.getFailResponse(403,"PDF 요약본이 없습니다.");
     }
 
+    @ExceptionHandler(NoSearchAdressException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResponse noSearchAdressException (HttpServletRequest req, NoSearchAdressException e){
+        return responseService.getFailResponse(400,"주소 입력이 잘못되었습니다.");
+    }
+
 }
