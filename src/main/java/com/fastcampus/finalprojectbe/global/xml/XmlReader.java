@@ -1,7 +1,7 @@
 package com.fastcampus.finalprojectbe.global.xml;
 
 
-import com.fastcampus.finalprojectbe.openapi.dto.AptDTO;
+import com.fastcampus.finalprojectbe.openapi.dto.tradingDetailResDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class XmlReader {
 
-    List<AptDTO> aptList = new ArrayList<>();
+    List<tradingDetailResDTO> aptList = new ArrayList<>();
 
     public void parser(Document doc) {
 
@@ -33,7 +33,7 @@ public class XmlReader {
             Node nNode = nodeList.item(i);
             Element element = (Element) nNode;
 
-            aptList.add(new AptDTO(
+            aptList.add(new tradingDetailResDTO(
                     getTagValue("일련번호", element),
                     getTagValue("거래금액", element).trim().replace(",", ""),
                     getTagValue("거래유형", element),
