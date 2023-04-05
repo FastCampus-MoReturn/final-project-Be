@@ -25,7 +25,7 @@ public class PdfParsingResDTO {
     @Schema(description = "주소")
     private String address; // 주소
     @Schema(description = "대지권 비율")
-    private double landrightratio; // 대지권비율
+    private double landRightRatio; // 대지권비율
     @Schema(description = "소유자 리스트")
     private Map<Integer, HashMap<String, String>> owner; // 소유자
     @Schema(description = "전용면적")
