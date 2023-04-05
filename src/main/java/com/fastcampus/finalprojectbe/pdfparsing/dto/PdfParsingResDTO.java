@@ -16,12 +16,16 @@ import java.util.Map;
 @Schema(description = "PDF파싱 출력 DATA")
 public class PdfParsingResDTO {
 
-    @Schema(description = "등기부 등본 고유번호")
+    @Schema(description = "등기부등본 고유번호")
     private String uniqueNumber; // 고유번호
     @Schema(description = "최고층수")
     private String maxFloor; //최고층수
+    @Schema(description = "현재 물건의 층")
+    private String currentFloor; // 현재 층
     @Schema(description = "주소")
     private String address; // 주소
+    @Schema(description = "대지권 비율")
+    private double landrightratio; // 대지권비율
     @Schema(description = "소유자 리스트")
     private Map<Integer, HashMap<String, String>> owner; // 소유자
     @Schema(description = "전용면적")
