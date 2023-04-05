@@ -1,7 +1,5 @@
-package com.fastcampus.finalprojectbe.publicapi.dto;
+package com.fastcampus.finalprojectbe.openapi.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
