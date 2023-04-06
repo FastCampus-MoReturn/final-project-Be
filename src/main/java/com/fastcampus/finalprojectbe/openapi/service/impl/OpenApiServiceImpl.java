@@ -4,7 +4,7 @@ import com.fastcampus.finalprojectbe.global.exception.NoSearchAdressException;
 import com.fastcampus.finalprojectbe.global.response.CommonResponse;
 import com.fastcampus.finalprojectbe.global.response.ResponseService;
 import com.fastcampus.finalprojectbe.global.xml.XmlReader;
-import com.fastcampus.finalprojectbe.openapi.dto.tradingDetailResDTO;
+import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailResDTO;
 import com.fastcampus.finalprojectbe.openapi.dto.TradingPriceIndexResDTO;
 import com.fastcampus.finalprojectbe.openapi.service.AddressService;
 import com.fastcampus.finalprojectbe.openapi.service.OpenApiService;
@@ -80,9 +80,9 @@ public class OpenApiServiceImpl implements OpenApiService {
         }catch (Exception e) {
             throw new NoSearchAdressException();
         }
-        List<tradingDetailResDTO> aptList = xmlReader.getAptList();
-        List<tradingDetailResDTO> result = new ArrayList<>();
-        for (tradingDetailResDTO apt : aptList) {
+        List<TradingDetailResDTO> aptList = xmlReader.getAptList();
+        List<TradingDetailResDTO> result = new ArrayList<>();
+        for (TradingDetailResDTO apt : aptList) {
             if (apt.getJibun().equals(jibun) && apt.getTradeAptName().contains(aptName)) {
                 result.add(apt);
             }

@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class tradingDetailResDTO {
+public class TradingDetailResDTO {
 
     private String serialNumber; // 일련번호
     private String amount;//거래금액
