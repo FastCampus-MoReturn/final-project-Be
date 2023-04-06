@@ -138,10 +138,10 @@ public class OpenApiServiceImpl implements OpenApiService {
                     List<TradingPriceIndexResDTO> dtoList = new ArrayList<>();
                     for (JsonNode node : sortedNodeList) {
                         TradingPriceIndexResDTO dto = new TradingPriceIndexResDTO();
-                        dto.setRESEARCH_DATE(node.get("RESEARCH_DATE").asText());
-                        dto.setINDICES(node.get("INDICES").asText());
-                        dto.setREGION_NM(node.get("REGION_NM").asText());
-                        dto.setTR_GBN(node.get("TR_GBN").asText());
+                        dto.setResearch_date(node.get("RESEARCH_DATE").asText());
+                        dto.setIndices(node.get("INDICES").asText());
+                        dto.setRegion_nm(node.get("REGION_NM").asText());
+                        dto.setTr_gbn(node.get("TR_GBN").asText());
                         dtoList.add(dto);
                     }
                     return dtoList;
