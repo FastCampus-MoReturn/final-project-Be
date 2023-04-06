@@ -4,7 +4,8 @@ import com.fastcampus.finalprojectbe.global.exception.NoSearchAdressException;
 import com.fastcampus.finalprojectbe.global.response.CommonResponse;
 import com.fastcampus.finalprojectbe.global.response.ResponseService;
 import com.fastcampus.finalprojectbe.global.xml.XmlReader;
-import com.fastcampus.finalprojectbe.openapi.dto.tradingDetailResDTO;
+import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailReqDTO;
+import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailResDTO;
 import com.fastcampus.finalprojectbe.openapi.dto.TradingPriceIndexResDTO;
 import com.fastcampus.finalprojectbe.openapi.service.AddressService;
 import com.fastcampus.finalprojectbe.openapi.service.OpenApiService;
@@ -70,9 +71,11 @@ public class OpenApiServiceImpl implements OpenApiService {
     }
 
     @Override
-    public CommonResponse tradingDetail(String address, int researchDate) {
+    public CommonResponse tradingDetail(TradingDetailReqDTO tradingDetailReqDTO) {
         String jibun = "";
         String aptName = "";
+        String address = tradingDetailReqDTO.getAddress();
+        int researchDate = tradingDetailReqDTO.getResearchDate();
         try {
             jibun = addressService.findJibun(address);
             aptName = addressService.findAptName(address);
@@ -80,9 +83,9 @@ public class OpenApiServiceImpl implements OpenApiService {
         }catch (Exception e) {
             throw new NoSearchAdressException();
         }
-        List<tradingDetailResDTO> aptList = xmlReader.getAptList();
-        List<tradingDetailResDTO> result = new ArrayList<>();
-        for (tradingDetailResDTO apt : aptList) {
+        List<TradingDetailResDTO> aptList = xmlReader.getAptList();
+        List<TradingDetailResDTO> result = new ArrayList<>();
+        for (TradingDetailResDTO apt : aptList) {
             if (apt.getJibun().equals(jibun) && apt.getTradeAptName().contains(aptName)) {
                 result.add(apt);
             }
@@ -138,10 +141,10 @@ public class OpenApiServiceImpl implements OpenApiService {
                     List<TradingPriceIndexResDTO> dtoList = new ArrayList<>();
                     for (JsonNode node : sortedNodeList) {
                         TradingPriceIndexResDTO dto = new TradingPriceIndexResDTO();
-                        dto.setRESEARCH_DATE(node.get("RESEARCH_DATE").asText());
-                        dto.setINDICES(node.get("INDICES").asText());
-                        dto.setREGION_NM(node.get("REGION_NM").asText());
-                        dto.setTR_GBN(node.get("TR_GBN").asText());
+                        dto.setResearch_date(node.get("RESEARCH_DATE").asText());
+                        dto.setIndices(node.get("INDICES").asText());
+                        dto.setRegion_nm(node.get("REGION_NM").asText());
+                        dto.setTr_gbn(node.get("TR_GBN").asText());
                         dtoList.add(dto);
                     }
                     return dtoList;
