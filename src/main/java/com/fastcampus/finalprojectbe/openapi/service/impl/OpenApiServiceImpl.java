@@ -4,6 +4,7 @@ import com.fastcampus.finalprojectbe.global.exception.NoSearchAdressException;
 import com.fastcampus.finalprojectbe.global.response.CommonResponse;
 import com.fastcampus.finalprojectbe.global.response.ResponseService;
 import com.fastcampus.finalprojectbe.global.xml.XmlReader;
+import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailReqDTO;
 import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailResDTO;
 import com.fastcampus.finalprojectbe.openapi.dto.TradingPriceIndexResDTO;
 import com.fastcampus.finalprojectbe.openapi.service.AddressService;
@@ -70,9 +71,11 @@ public class OpenApiServiceImpl implements OpenApiService {
     }
 
     @Override
-    public CommonResponse tradingDetail(String address, int researchDate) {
+    public CommonResponse tradingDetail(TradingDetailReqDTO tradingDetailReqDTO) {
         String jibun = "";
         String aptName = "";
+        String address = tradingDetailReqDTO.getAddress();
+        int researchDate = tradingDetailReqDTO.getResearchDate();
         try {
             jibun = addressService.findJibun(address);
             aptName = addressService.findAptName(address);
