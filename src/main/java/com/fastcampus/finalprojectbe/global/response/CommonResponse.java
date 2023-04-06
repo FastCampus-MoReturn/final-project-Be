@@ -1,13 +1,14 @@
 package com.fastcampus.finalprojectbe.global.response;
 
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(description = "공통 Response")
+@ApiModel(value = "공통 Response")
 public class CommonResponse {
 
     @Schema(description = "Response 성공 여부")

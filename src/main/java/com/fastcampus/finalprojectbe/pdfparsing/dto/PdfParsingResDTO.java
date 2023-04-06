@@ -1,6 +1,7 @@
 package com.fastcampus.finalprojectbe.pdfparsing.dto;
 
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Schema(description = "PDF파싱 출력 DATA")
+@ApiModel(value = "PDF파싱 출력 DATA")
 public class PdfParsingResDTO {
 
     @Schema(description = "등기부등본 고유번호")

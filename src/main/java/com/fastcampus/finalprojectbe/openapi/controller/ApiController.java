@@ -2,6 +2,7 @@ package com.fastcampus.finalprojectbe.openapi.controller;
 
 
 import com.fastcampus.finalprojectbe.global.response.CommonResponse;
+import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailReqDTO;
 import com.fastcampus.finalprojectbe.openapi.service.OpenApiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -10,12 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -42,7 +38,7 @@ public class ApiController {
             @ApiParam(value = "1년:12, 3개월:3, 6개월:6", required = true) int researchDate // (1년:12, 3개월:3, 6개월:6)
     ) {
 
-        return openApiService.tradingPriceIndex(regionCode,contractType,researchDate);
+        return openApiService.tradingPriceIndex(regionCode, contractType, researchDate);
     }
 
 
@@ -53,19 +49,12 @@ public class ApiController {
             @ApiResponse(responseCode = "404", description = "잘못된 접근"),
             @ApiResponse(responseCode = "500", description = "API 서버에러")
     })
-    @GetMapping("/api/tradingdetail/{address}/{researchDate}/")  //아파트 실거래 상세 자료 조회
+    @PostMapping("/api/tradingdetail")  //아파트 실거래 상세 자료 조회
     public CommonResponse tradingDetail(
-            @PathVariable("address")
-            @ApiParam(value = "등기부등본 parsing 데이터 중 address 데이터", required = true) String address,
-            @PathVariable("researchDate")
-            @ApiParam(value = "1년:12, 3개월:3, 6개월:6", required = true) int researchDate // (1년:12, 3개월:3, 6개월:6)
-    ) throws ParserConfigurationException, IOException {
-        return openApiService.tradingDetail(address,researchDate);
+            @ApiParam(value = "등기부등본 parsing 데이터 중 address 데이터", required = true)
+            @RequestBody TradingDetailReqDTO tradingDetailReqDTO) {
+        return openApiService.tradingDetail(tradingDetailReqDTO);
     }
-
-
-
-
 
 
 }

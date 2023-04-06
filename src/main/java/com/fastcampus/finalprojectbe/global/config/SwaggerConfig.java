@@ -1,5 +1,10 @@
 package com.fastcampus.finalprojectbe.global.config;
 
+import com.fastcampus.finalprojectbe.openapi.dto.TradingDetailResDTO;
+import com.fastcampus.finalprojectbe.openapi.dto.TradingPriceIndexResDTO;
+import com.fastcampus.finalprojectbe.pdfparsing.dto.PdfParsingResDTO;
+import com.fasterxml.classmate.TypeResolver;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -21,10 +26,12 @@ import java.util.List;
 
 @EnableWebMvc
 @Configuration
+@RequiredArgsConstructor
 public class SwaggerConfig extends WebMvcConfigurationSupport {
 
 //    private static final String REFERENCE = "Bearer";
 
+    private final TypeResolver typeResolver;
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30) // 3.0 문서버전으로 세팅
@@ -34,6 +41,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 //                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
+                .additionalModels(typeResolver.resolve(PdfParsingResDTO.class))
+                .additionalModels(typeResolver.resolve(TradingPriceIndexResDTO.class))
+                .additionalModels(typeResolver.resolve(TradingDetailResDTO.class))
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo());
 //                .ignoredParameterTypes(AuthenticationPrincipal.class)
