@@ -12,10 +12,9 @@ public interface TermsRepository extends JpaRepository<Terms, Integer> {
     Page<Terms> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 
-    @Query("SELECT t FROM Terms t WHERE " +
-            "CASE " +
-            "WHEN t.title < '가' THEN SUBSTRING(t.title, 1, 1) " +
-            "WHEN '나' <= t.title AND t.title <= '하' THEN t.title " +
+    @Query("SELECT t FROM Terms t " +
+            "WHERE CASE WHEN t.title < '가' THEN SUBSTRING(t.title, 1, 1) " +
+            "WHEN '가' <= t.title AND t.title <= 'ㅎ' THEN t.title " +
             "WHEN t.title < '나' THEN '가' " +
             "WHEN t.title < '다' THEN '나' " +
             "WHEN t.title < '라' THEN '다' " +

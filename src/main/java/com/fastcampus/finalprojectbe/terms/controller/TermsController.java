@@ -36,7 +36,7 @@ public class TermsController {
     @GetMapping("api/terms/{keyword}")
     public ResponseEntity<Map<String, Object>> getTermsListByKeyword(
             @PathVariable("keyword")
-            @ApiParam(value = "가", required = true) String keyword, Pageable pageable) {
+            @ApiParam(required = true) String keyword, Pageable pageable) {
         Page<TermsResDTO> page = termsService.getTermsListByKeyword(keyword, pageable);
 
         Map<String, Object> response = new HashMap<>();
