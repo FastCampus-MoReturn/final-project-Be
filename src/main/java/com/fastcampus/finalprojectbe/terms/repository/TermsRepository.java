@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface TermsRepository extends JpaRepository<Terms, Integer> {
-    @Query("SELECT t FROM Terms t WHERE t.title LIKE %:keyword% OR t.description LIKE %:keyword%")
+    @Query("SELECT t FROM Terms t WHERE t.title LIKE %:keyword%")
     Page<Terms> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 
