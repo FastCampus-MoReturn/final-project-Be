@@ -21,7 +21,8 @@ public class PageableConfig implements WebMvcConfigurer {
 
         pageableArgumentResolver.setFallbackPageable(PageRequest.of(0, Integer.MAX_VALUE));
 
-        pageableArgumentResolver.setPageParameterName("pageno");
+        pageableArgumentResolver.setPageParameterName("pageNumber");
+        pageableArgumentResolver.setSizeParameterName("pageSize");
 
         argumentResolvers.add(pageableArgumentResolver);
 
