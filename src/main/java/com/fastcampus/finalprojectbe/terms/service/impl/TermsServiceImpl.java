@@ -63,7 +63,6 @@ public class TermsServiceImpl implements TermsService {
     private Page<TermsResDTO> mapToTermsResDTO(Page<Terms> termsList) {
         return termsList.map(terms -> TermsResDTO.builder()
                 .title(terms.getTitle())
-                .description(terms.getDescription())
                 .build());
     }
 }
