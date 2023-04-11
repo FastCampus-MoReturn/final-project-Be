@@ -28,4 +28,22 @@ public class ExceptionAdvice {
         return responseService.getFailResponse(403,"PDF 요약본이 없습니다.");
     }
 
+    @ExceptionHandler(NoSearchAdressException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResponse noSearchAdressException (HttpServletRequest req, NoSearchAdressException e){
+        return responseService.getFailResponse(400,"주소 입력이 잘못되었습니다.");
+    }
+
+    @ExceptionHandler(KeywordValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected CommonResponse keywordValidationException(HttpServletRequest request, KeywordValidationException e) {
+        return responseService.getFailResponse(400, "잘못된 키워드를 입력했습니다.");
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    protected CommonResponse dataNotFoundException(HttpServletRequest request, DataNotFoundException e) {
+        return responseService.getFailResponse(404, "해당 키워드의 결과값이 없습니다.");
+    }
+
 }
