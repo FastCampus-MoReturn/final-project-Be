@@ -30,7 +30,7 @@
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/baker-lee"><img src= "https://avatars.githubusercontent.com/u/113500934?v=4" width="100px" alt=""/><br /><sub><b>BE 팀장 : 이성호 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/JaeHackJang"><img src="https://avatars.githubusercontent.com/u/113875954?v=4" width="100px" alt=""/><br /><sub><b>BE 팀원 : 장재학 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/JaeHackJang"><img src="https://avatars.githubusercontent.com/u/113875954?v=4" width="100px" alt=""/><br /><sub><b>BE 팀원 : 장시우 </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/dkschdcks"><img src="https://avatars.githubusercontent.com/u/113900719?v=4" width="100px" alt=""/><br /><sub><b>BE 팀원 : 안장원 </b></sub></a><br /></td>
    </tr>
   </tbody>
